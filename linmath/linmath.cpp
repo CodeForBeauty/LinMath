@@ -142,6 +142,21 @@ mat4 ln::perspective(float fov, float near, float far, float ratio)
 	return out;
 }
 
+mat4 ln::lookAt(vec3 at, vec3 eye, vec3 up)
+{
+	mat4 out = {};
+	vec3 zaxis = normalize(at - eye);
+	vec3 xaxis = normalize(cross(up, zaxis));
+	vec3 yaxis = cross(zaxis, xaxis);
+
+	out.x = xaxis;
+	out.y = yaxis;
+	out.z = zaxis;
+
+	out.w = vec4(-dot(xaxis, eye), -dot(yaxis, eye), -dot(zaxis, eye), 1.0);
+	return out;
+}
+
 
 std::ostream& operator <<(std::ostream& os, vec2 vec)
 {
