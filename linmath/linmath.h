@@ -236,6 +236,7 @@ namespace ln
 	mat4 orthographic(float left, float right, float bottom, float top, float back, float front);
 	mat4 perspective(float fov, float near, float far, float ratio = 1.0f);
 	mat4 lookAt(vec3 at, vec3 eye, vec3 up = {0, 1, 0});
+	mat3 eulerRotation(vec3 degree);
 }
 
 std::ostream& operator <<(std::ostream& os, ln::vec2 vec);

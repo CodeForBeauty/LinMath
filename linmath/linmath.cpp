@@ -157,6 +157,33 @@ mat4 ln::lookAt(vec3 at, vec3 eye, vec3 up)
 	return out;
 }
 
+mat3 ln::eulerRotation(vec3 degree)
+{
+	vec3 theta = { radians(degree.x), radians(degree.y), radians(degree.z) };
+	/*
+	{
+		cos(theta.z), -sin(theta.z), 0,
+		sin(theta.z), cos(theta.z), 0
+	}
+	{
+		cos(theta.y), 0, -sin(theta.y),
+		0,
+		sin(theta.y), 0, cos(theta.y)
+	}
+	{
+		0,
+		0, cos(theta.x), -sin(theta.x),
+		0, sin(theta.x), cos(theta.x)
+	}
+	*/
+	mat3 out = {};
+	out.x = { std::cos(theta.z) * std::cos(theta.y), -std::sin(theta.z), -std::sin(theta.y) };
+	out.y = { -out.x.y, std::cos(theta.z) * std::cos(theta.x), -std::sin(theta.x) };
+	out.z = { std::sin(theta.y), std::sin(theta.x), std::cos(theta.y) * std::cos(theta.x) };
+
+	return out;
+}
+
 
 std::ostream& operator <<(std::ostream& os, vec2 vec)
 {
