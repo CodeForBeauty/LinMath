@@ -145,6 +145,10 @@ namespace ln
 	{
 		vec3 x, y, z;
 
+		mat3() { x = {}; y = {}; z = {}; }
+		mat3(vec3 x1, vec3 y1, vec3 z1) { x = x1; y = y1; z = z1; }
+		mat3(mat2 matrix) { x = matrix.x; y = matrix.y; z = {}; }
+
 		vec3 getX();
 		vec3 getY();
 		vec3 getZ();
@@ -184,6 +188,11 @@ namespace ln
 	struct mat4
 	{
 		vec4 x, y, z, w;
+
+		mat4() { x = {}; y = {}; z = {}; w = {}; }
+		mat4(vec4 x1, vec4 y1, vec4 z1, vec4 w1) { x = x1; y = y1; z = z1; w = w1; }
+		mat4(mat2 matrix) { x = matrix.x; y = matrix.y; z = {}; w = {}; }
+		mat4(mat3 matrix) { x = matrix.x; y = matrix.y; z = matrix.z; w = {}; }
 
 		vec4 getX();
 		vec4 getY();
@@ -237,6 +246,14 @@ namespace ln
 	mat4 perspective(float fov, float near, float far, float ratio = 1.0f);
 	mat4 lookAt(vec3 at, vec3 eye, vec3 up = {0, 1, 0});
 	mat3 eulerRotation(vec3 degree);
+
+	vec3 concatVec3(vec4 vec);
+	vec2 concatVec2(vec4 vec);
+	vec2 concatVec2(vec3 vec);
+
+	mat2 concatMat2(mat4 matrix);
+	mat2 concatMat2(mat3 matrix);
+	mat3 concatMat3(mat4 matrix);
 }
 
 std::ostream& operator <<(std::ostream& os, ln::vec2 vec);

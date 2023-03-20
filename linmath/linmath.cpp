@@ -160,22 +160,7 @@ mat4 ln::lookAt(vec3 at, vec3 eye, vec3 up)
 mat3 ln::eulerRotation(vec3 degree)
 {
 	vec3 theta = { radians(degree.x), radians(degree.y), radians(degree.z) };
-	/*
-	{
-		cos(theta.z), -sin(theta.z), 0,
-		sin(theta.z), cos(theta.z), 0
-	}
-	{
-		cos(theta.y), 0, -sin(theta.y),
-		0,
-		sin(theta.y), 0, cos(theta.y)
-	}
-	{
-		0,
-		0, cos(theta.x), -sin(theta.x),
-		0, sin(theta.x), cos(theta.x)
-	}
-	*/
+
 	mat3 out = {};
 	out.x = { std::cos(theta.z) * std::cos(theta.y), -std::sin(theta.z), -std::sin(theta.y) };
 	out.y = { -out.x.y, std::cos(theta.z) * std::cos(theta.x), -std::sin(theta.x) };
@@ -183,6 +168,14 @@ mat3 ln::eulerRotation(vec3 degree)
 
 	return out;
 }
+
+vec3 ln::concatVec3(vec4 vec) { return { vec.x, vec.y, vec.z }; }
+vec2 ln::concatVec2(vec4 vec) { return { vec.x, vec.y }; }
+vec2 ln::concatVec2(vec3 vec) { return { vec.x, vec.y }; }
+
+mat2 ln::concatMat2(mat4 matrix) { return { concatVec2(matrix.x), concatVec2(matrix.y) }; }
+mat2 ln::concatMat2(mat3 matrix) { return { concatVec2(matrix.x), concatVec2(matrix.y) }; }
+mat3 ln::concatMat3(mat4 matrix) { return { concatVec3(matrix.x), concatVec3(matrix.y), concatVec3(matrix.z) }; }
 
 
 std::ostream& operator <<(std::ostream& os, vec2 vec)
