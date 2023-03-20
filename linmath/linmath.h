@@ -64,6 +64,7 @@ namespace ln
 		void operator -=(const double& val) { this->x -= val; this->y -= val; this->z += val; }
 
 		void operator =(const vec3& a) { this->x = a.x; this->y = a.y; this->z = a.z; }
+		void operator =(const vec2& a) { this->x = a.x; this->y = a.y; }
 	};
 	struct vec4
 	{
@@ -93,6 +94,8 @@ namespace ln
 		void operator +=(const double& val) { this->x += val; this->y += val; this->z += val; this->w += val; }
 		void operator -=(const double& val) { this->x -= val; this->y -= val; this->z += val; this->w -= val; }
 
+		void operator =(const vec2& a) { this->x = a.x; this->y = a.y; }
+		void operator =(const vec3& a) { this->x = a.x; this->y = a.y; this->z = a.z; }
 		void operator =(const vec4& a) { this->x = a.x; this->y = a.y; this->z = a.z; this->w = a.w; }
 	};
 
@@ -113,7 +116,7 @@ namespace ln
 	vec4 normalize(vec4 v);
 
 
-	struct mat2 
+	struct mat2
 	{
 		vec2 x, y;
 
@@ -140,14 +143,16 @@ namespace ln
 
 			return out;
 		}
+
+		void operator =(const mat2& a) { this->x = a.x; this->y = a.y; }
 	};
 	struct mat3
 	{
 		vec3 x, y, z;
 
-		mat3() { x = {}; y = {}; z = {}; }
+		mat3() {}
 		mat3(vec3 x1, vec3 y1, vec3 z1) { x = x1; y = y1; z = z1; }
-		mat3(mat2 matrix) { x = matrix.x; y = matrix.y; z = {}; }
+		mat3(mat2 matrix) { x = matrix.x; y = matrix.y; }
 
 		vec3 getX();
 		vec3 getY();
@@ -184,15 +189,18 @@ namespace ln
 
 			return out;
 		}
+
+		void operator =(const mat2& a) { this->x = a.x; this->y = a.y; }
+		void operator =(const mat3& a) { this->x = a.x; this->y = a.y; this->z = a.z; }
 	};
 	struct mat4
 	{
 		vec4 x, y, z, w;
 
-		mat4() { x = {}; y = {}; z = {}; w = {}; }
+		mat4() {}
 		mat4(vec4 x1, vec4 y1, vec4 z1, vec4 w1) { x = x1; y = y1; z = z1; w = w1; }
-		mat4(mat2 matrix) { x = matrix.x; y = matrix.y; z = {}; w = {}; }
-		mat4(mat3 matrix) { x = matrix.x; y = matrix.y; z = matrix.z; w = {}; }
+		mat4(mat2 matrix) { x = matrix.x; y = matrix.y; }
+		mat4(mat3 matrix) { x = matrix.x; y = matrix.y; z = matrix.z; }
 
 		vec4 getX();
 		vec4 getY();
@@ -240,11 +248,15 @@ namespace ln
 
 			return out;
 		}
+
+		void operator =(const mat2& a) { this->x = a.x; this->y = a.y; }
+		void operator =(const mat3& a) { this->x = a.x; this->y = a.y; this->z = a.z; }
+		void operator =(const mat4& a) { this->x = a.x; this->y = a.y; this->z = a.z; this->w = a.w; }
 	};
 
 	mat4 orthographic(float left, float right, float bottom, float top, float back, float front);
 	mat4 perspective(float fov, float near, float far, float ratio = 1.0f);
-	mat4 lookAt(vec3 at, vec3 eye, vec3 up = {0, 1, 0});
+	mat4 lookAt(vec3 at, vec3 eye, vec3 up = { 0, 1, 0 });
 	mat3 eulerRotation(vec3 degree);
 
 	vec3 concatVec3(vec4 vec);
