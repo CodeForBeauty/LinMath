@@ -10,6 +10,9 @@ namespace ln
 
 	struct vec2
 	{
+	private:
+		float values[2] = {0, 0};
+	public:
 		double x, y;
 
 		vec2() { x = 0; y = 0; }
@@ -38,12 +41,16 @@ namespace ln
 
 		operator float* ()
 		{
-			float out[2] = { x, y };
-			return out;
+			values[0] = x;
+			values[1] = y;
+			return values;
 		}
 	};
 	struct vec3
 	{
+	private:
+		float values[3] = { 0, 0, 0 };
+	public:
 		double x, y, z;
 
 		vec3() { x = 0; y = 0; z = 0; }
@@ -74,12 +81,17 @@ namespace ln
 
 		operator float* ()
 		{
-			float out[3] = { x, y, z };
-			return out;
+			values[0] = x;
+			values[1] = y;
+			values[2] = z;
+			return values;
 		}
 	};
 	struct vec4
 	{
+	private:
+		float values[4] = { 0, 0, 0, 0 };
+	public:
 		double x, y, z, w;
 
 		vec4() { x = 0; y = 0; z = 0; w = 0; }
@@ -112,8 +124,11 @@ namespace ln
 
 		operator float* ()
 		{
-			float out[4] = { x, y, z, w };
-			return out;
+			values[0] = x;
+			values[1] = y;
+			values[2] = z;
+			values[3] = w;
+			return values;
 		}
 	};
 
@@ -136,7 +151,13 @@ namespace ln
 
 	struct mat2
 	{
+	private:
+		float values[4] = { 0, 0, 0, 0 };
+	public:
 		vec2 x, y;
+
+		mat2() {}
+		mat2(vec2 x1, vec2 y1) { x = x1; y = y1; }
 
 		vec2 getX();
 		vec2 getY();
@@ -166,13 +187,18 @@ namespace ln
 
 		operator float* ()
 		{
-			float out[4] = { x.x, y.x,
-							 x.y, y.y };
-			return out;
+			values[0] = x.x;
+			values[1] = x.y;
+			values[2] = y.x;
+			values[3] = y.y;
+			return values;
 		}
 	};
 	struct mat3
 	{
+	private:
+		float values[9] = { 0, 0, 0, 0 };
+	public:
 		vec3 x, y, z;
 
 		mat3() {}
@@ -220,14 +246,25 @@ namespace ln
 
 		operator float* ()
 		{
-			float out[9] = { x.x, y.x, z.x,
-							 x.y, y.y, z.y,
-							 x.z, y.z, z.z };
-			return out;
+			values[0] = x.x;
+			values[1] = x.y;
+			values[2] = x.z;
+
+			values[3] = y.x;
+			values[4] = y.y;
+			values[5] = y.z;
+
+			values[6] = z.x;
+			values[7] = z.y;
+			values[8] = z.z;
+			return values;
 		}
 	};
 	struct mat4
 	{
+	private:
+		float values[16] = { 0, 0, 0, 0 };
+	public:
 		vec4 x, y, z, w;
 
 		mat4() {}
@@ -288,11 +325,26 @@ namespace ln
 
 		operator float* ()
 		{
-			float out[16] = { x.x, y.x, z.x, w.x,
-							  x.y, y.y, z.y, w.y,
-							  x.z, y.z, z.z, w.z,
-							  x.w, y.w, z.w, w.w };
-			return out;
+			values[0] = x.x;
+			values[1] = x.y;
+			values[2] = x.z;
+			values[3] = x.w;
+
+			values[4] = y.x;
+			values[5] = y.y;
+			values[6] = y.z;
+			values[7] = y.w;
+
+			values[8] = z.x;
+			values[9] = z.y;
+			values[10] = z.z;
+			values[11] = z.w;
+
+			values[12] = w.x;
+			values[13] = w.y;
+			values[14] = w.z;
+			values[15] = w.w;
+			return values;
 		}
 	};
 
