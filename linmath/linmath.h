@@ -259,6 +259,8 @@ namespace ln
 	mat4 lookAt(vec3 at, vec3 eye, vec3 up = { 0, 1, 0 });
 	mat3 eulerRotation(vec3 degree);
 
+	mat4 transform(vec3 position, vec3 rotation);
+
 	vec3 concatVec3(vec4 vec);
 	vec2 concatVec2(vec4 vec);
 	vec2 concatVec2(vec3 vec);

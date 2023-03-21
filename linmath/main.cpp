@@ -4,15 +4,14 @@
 
 int main()
 {
-	ln::vec3 pos = { 0, 1, 0 };
+	ln::vec4 pos = { 0, 1, 0, 1 };
 	ln::mat4 proj = ln::perspective(ln::radians(90), 0.1f, 20.0f);
 	ln::mat4 view = ln::lookAt({1, 2, 0}, {0, -1, 0}, {0, 1, 0});
-	ln::mat3 rot = ln::eulerRotation({ 25, 0, 25 });
-	ln::vec4 outPos = view * ln::vec4(pos);
-	ln::vec3 out = rot * pos;
-	outPos.x /= outPos.w;
-	outPos.y /= outPos.w;
-	outPos.z /= outPos.w;
-	std::cout << outPos;
+	ln::mat4 transform = ln::transform({2, 0, 0}, {45, 0, 0});
+	ln::vec4 out = transform * pos;
+	//out1.x /= out1.w;
+	//out1.y /= out1.w;
+	//out1.z /= out1.w;
+	std::cout << out;
 	return 0;
 }
