@@ -35,6 +35,12 @@ namespace ln
 		void operator -=(const double& val) { this->x -= val; this->y -= val; }
 
 		void operator =(const vec2& a) { this->x = a.x; this->y = a.y; }
+
+		operator float* ()
+		{
+			float out[2] = { x, y };
+			return out;
+		}
 	};
 	struct vec3
 	{
@@ -65,6 +71,12 @@ namespace ln
 
 		void operator =(const vec3& a) { this->x = a.x; this->y = a.y; this->z = a.z; }
 		void operator =(const vec2& a) { this->x = a.x; this->y = a.y; }
+
+		operator float* ()
+		{
+			float out[3] = { x, y, z };
+			return out;
+		}
 	};
 	struct vec4
 	{
@@ -97,6 +109,12 @@ namespace ln
 		void operator =(const vec2& a) { this->x = a.x; this->y = a.y; }
 		void operator =(const vec3& a) { this->x = a.x; this->y = a.y; this->z = a.z; }
 		void operator =(const vec4& a) { this->x = a.x; this->y = a.y; this->z = a.z; this->w = a.w; }
+
+		operator float* ()
+		{
+			float out[4] = { x, y, z, w };
+			return out;
+		}
 	};
 
 
@@ -145,6 +163,13 @@ namespace ln
 		}
 
 		void operator =(const mat2& a) { this->x = a.x; this->y = a.y; }
+
+		operator float* ()
+		{
+			float out[4] = { x.x, y.x,
+							 x.y, y.y };
+			return out;
+		}
 	};
 	struct mat3
 	{
@@ -192,6 +217,14 @@ namespace ln
 
 		void operator =(const mat2& a) { this->x = a.x; this->y = a.y; }
 		void operator =(const mat3& a) { this->x = a.x; this->y = a.y; this->z = a.z; }
+
+		operator float* ()
+		{
+			float out[9] = { x.x, y.x, z.x,
+							 x.y, y.y, z.y,
+							 x.z, y.z, z.z };
+			return out;
+		}
 	};
 	struct mat4
 	{
@@ -252,6 +285,15 @@ namespace ln
 		void operator =(const mat2& a) { this->x = a.x; this->y = a.y; }
 		void operator =(const mat3& a) { this->x = a.x; this->y = a.y; this->z = a.z; }
 		void operator =(const mat4& a) { this->x = a.x; this->y = a.y; this->z = a.z; this->w = a.w; }
+
+		operator float* ()
+		{
+			float out[16] = { x.x, y.x, z.x, w.x,
+							  x.y, y.y, z.y, w.y,
+							  x.z, y.z, z.z, w.z,
+							  x.w, y.w, z.w, w.w };
+			return out;
+		}
 	};
 
 	mat4 orthographic(float left, float right, float bottom, float top, float back, float front);
@@ -261,15 +303,23 @@ namespace ln
 
 	mat4 transform(vec3 position, vec3 rotation);
 
-	vec3 concatVec3(vec4 vec);
-	vec2 concatVec2(vec4 vec);
-	vec2 concatVec2(vec3 vec);
+	vec3 cutVec3(vec4 vec);
+	vec2 cutVec2(vec4 vec);
+	vec2 cutVec2(vec3 vec);
 
-	mat2 concatMat2(mat4 matrix);
-	mat2 concatMat2(mat3 matrix);
-	mat3 concatMat3(mat4 matrix);
+	mat2 cutMat2(mat4 matrix);
+	mat2 cutMat2(mat3 matrix);
+	mat3 cutMat3(mat4 matrix);
 }
 
 std::ostream& operator <<(std::ostream& os, ln::vec2 vec);
 std::ostream& operator <<(std::ostream& os, ln::vec3 vec);
 std::ostream& operator <<(std::ostream& os, ln::vec4 vec);
+
+struct Vertex
+{
+	ln::vec3 position;
+	ln::vec3 normal;
+	ln::vec2 uv;
+	ln::vec4 color;
+};
