@@ -3,27 +3,27 @@
 using namespace ln;
 
 
-double ln::radians(double angle)
+float ln::radians(float angle)
 {
 	return angle * PI / 180;
 }
 
-double ln::dot(vec2 v1, vec2 v2)
+float ln::dot(vec2 v1, vec2 v2)
 {
 	return v1.x * v2.x + v1.y * v2.y;
 }
 
-double ln::dot(vec3 v1, vec3 v2)
+float ln::dot(vec3 v1, vec3 v2)
 {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 }
 
-double ln::dot(vec4 v1, vec4 v2)
+float ln::dot(vec4 v1, vec4 v2)
 {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w;
 }
 
-double ln::cross(vec2 v1, vec2 v2)
+float ln::cross(vec2 v1, vec2 v2)
 {
 	return v1.x * v2.y - v1.y * v2.x;
 }
@@ -38,17 +38,17 @@ vec3 ln::cross(vec3 v1, vec3 v2)
 }
 
 
-double ln::magnitude(vec2 v)
+float ln::magnitude(vec2 v)
 {
 	return std::sqrt(dot(v, v));
 }
 
-double ln::magnitude(vec3 v)
+float ln::magnitude(vec3 v)
 {
 	return std::sqrt(dot(v, v));
 }
 
-double ln::magnitude(vec4 v)
+float ln::magnitude(vec4 v)
 {
 	return std::sqrt(dot(v, v));
 }
@@ -152,8 +152,9 @@ mat4 ln::lookAt(vec3 at, vec3 eye, vec3 up)
 	out.x = xaxis;
 	out.y = yaxis;
 	out.z = zaxis;
-
+	out.w.w = 1.0f;
 	out.w = vec4(-dot(xaxis, eye), -dot(yaxis, eye), -dot(zaxis, eye), 1.0);
+
 	return out;
 }
 
@@ -161,11 +162,22 @@ mat3 ln::eulerRotation(vec3 degree)
 {
 	vec3 theta = { radians(degree.x), radians(degree.y), radians(degree.z) };
 
-	mat3 out = {};
-	out.x = { std::cos(theta.z) * std::cos(theta.y), -std::sin(theta.z), -std::sin(theta.y) };
-	out.y = { -out.x.y, std::cos(theta.z) * std::cos(theta.x), -std::sin(theta.x) };
-	out.z = { std::sin(theta.y), std::sin(theta.x), std::cos(theta.y) * std::cos(theta.x) };
+	mat3 rotZ = {};
+	rotZ.x = { std::cos(theta.z), -std::sin(theta.z), 0.0f };
+	rotZ.y = { -rotZ.x.y, rotZ.x.x, 0.0f };
+	rotZ.z.z = 1.0f;
 
+	mat3 rotY = {};
+	rotY.x = { std::cos(theta.y), 0.0f, -std::sin(theta.y) };
+	rotY.y.y = 1.0f;
+	rotY.z = { -rotY.x.z, 0.0f, rotY.x.x };
+
+	mat3 rotX = {};
+	rotX.x.x = 1.0f;
+	rotX.y = { 0.0f, std::cos(theta.x), -std::sin(theta.x) };
+	rotX.z = { 0.0f, -rotX.y.z, rotX.y.y };
+
+	mat3 out = rotZ * rotY * rotX;
 	return out;
 }
 

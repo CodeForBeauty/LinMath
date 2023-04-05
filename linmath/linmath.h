@@ -6,17 +6,14 @@ const double PI = 3.14159265359;
 
 namespace ln
 {
-	double radians(double angle);
+	float radians(float angle);
 
 	struct vec2
 	{
-	private:
-		float values[2] = {0, 0};
-	public:
-		double x, y;
+		float x, y;
 
 		vec2() { x = 0; y = 0; }
-		vec2(double x1, double y1) { x = x1; y = y1; }
+		vec2(float x1, float y1) { x = x1; y = y1; }
 
 		vec2 operator +(const vec2& a) { return { x + a.x, y + a.y }; }
 		vec2 operator -(const vec2& a) { return { x - a.x, y - a.y }; }
@@ -29,33 +26,28 @@ namespace ln
 		vec2 operator -() { return { -x, -y }; }
 		void operator ++(int) { this->x++; this->y++; }
 
-		vec2 operator +(const double& val) { return { x + val, y + val }; }
-		vec2 operator -(const double& val) { return { x - val, y - val }; }
-		vec2 operator /(const double& val) { return { x / val, y / val }; }
-		vec2 operator *(const double& val) { return { x * val, y * val }; }
+		vec2 operator +(const float& val) { return { x + val, y + val }; }
+		vec2 operator -(const float& val) { return { x - val, y - val }; }
+		vec2 operator /(const float& val) { return { x / val, y / val }; }
+		vec2 operator *(const float& val) { return { x * val, y * val }; }
 
-		void operator +=(const double& val) { this->x += val; this->y += val; }
-		void operator -=(const double& val) { this->x -= val; this->y -= val; }
+		void operator +=(const float& val) { this->x += val; this->y += val; }
+		void operator -=(const float& val) { this->x -= val; this->y -= val; }
 
 		void operator =(const vec2& a) { this->x = a.x; this->y = a.y; }
 
 		operator float* ()
 		{
-			values[0] = x;
-			values[1] = y;
-			return values;
+			return &x;
 		}
 	};
 	struct vec3
 	{
-	private:
-		float values[3] = { 0, 0, 0 };
-	public:
-		double x, y, z;
+		float x, y, z;
 
 		vec3() { x = 0; y = 0; z = 0; }
 		vec3(vec2 v) { x = v.x; y = v.y; z = 0; }
-		vec3(double x1, double y1, double z1) { x = x1; y = y1; z = z1; }
+		vec3(float x1, float y1, float z1) { x = x1; y = y1; z = z1; }
 
 		vec3 operator +(const vec3& a) { return { x + a.x, y + a.y, z + a.z }; }
 		vec3 operator -(const vec3& a) { return { x - a.x, y - a.y, z - a.z }; }
@@ -68,36 +60,30 @@ namespace ln
 		vec3 operator -() { return { -x, -y, -z }; }
 		void operator ++(int) { this->x++; this->y++; this->z++; }
 
-		vec3 operator +(const double& val) { return { x + val, y + val, z + val }; }
-		vec3 operator -(const double& val) { return { x - val, y - val, z - val }; }
-		vec3 operator /(const double& val) { return { x / val, y / val, z / val }; }
-		vec3 operator *(const double& val) { return { x * val, y * val, z * val }; }
+		vec3 operator +(const float& val) { return { x + val, y + val, z + val }; }
+		vec3 operator -(const float& val) { return { x - val, y - val, z - val }; }
+		vec3 operator /(const float& val) { return { x / val, y / val, z / val }; }
+		vec3 operator *(const float& val) { return { x * val, y * val, z * val }; }
 
-		void operator +=(const double& val) { this->x += val; this->y += val; this->z += val; }
-		void operator -=(const double& val) { this->x -= val; this->y -= val; this->z += val; }
+		void operator +=(const float& val) { this->x += val; this->y += val; this->z += val; }
+		void operator -=(const float& val) { this->x -= val; this->y -= val; this->z += val; }
 
 		void operator =(const vec3& a) { this->x = a.x; this->y = a.y; this->z = a.z; }
 		void operator =(const vec2& a) { this->x = a.x; this->y = a.y; }
 
 		operator float* ()
 		{
-			values[0] = x;
-			values[1] = y;
-			values[2] = z;
-			return values;
+			return &x;
 		}
 	};
 	struct vec4
 	{
-	private:
-		float values[4] = { 0, 0, 0, 0 };
-	public:
-		double x, y, z, w;
+		float x, y, z, w;
 
 		vec4() { x = 0; y = 0; z = 0; w = 0; }
 		vec4(vec2 v) { x = v.x; y = v.y; z = 0; w = 0; }
-		vec4(vec3 v) { x = v.x; y = v.y; z = v.z; w = 0; }
-		vec4(double x1, double y1, double z1, double w1) { x = x1; y = y1; z = z1; w = w1; }
+		vec4(vec3 v) { x = v.x; y = v.y; z = v.z; w = 1; }
+		vec4(float x1, float y1, float z1, float w1) { x = x1; y = y1; z = z1; w = w1; }
 
 		vec4 operator +(const vec4& a) { return { x + a.x, y + a.y, z + a.z, w + a.w }; }
 		vec4 operator -(const vec4& a) { return { x - a.x, y - a.y, z - a.z, w - a.w }; }
@@ -110,13 +96,13 @@ namespace ln
 		vec4 operator -() { return { -x, -y, -z, -w }; }
 		void operator ++(int) { this->x++; this->y++; this->z++; this->w++; }
 
-		vec4 operator +(const double& val) { return { x + val, y + val, z + val, w + val }; }
-		vec4 operator -(const double& val) { return { x - val, y - val, z - val, w - val }; }
-		vec4 operator /(const double& val) { return { x / val, y / val, z / val, w / val }; }
-		vec4 operator *(const double& val) { return { x * val, y * val, z * val, w * val }; }
+		vec4 operator +(const float& val) { return { x + val, y + val, z + val, w + val }; }
+		vec4 operator -(const float& val) { return { x - val, y - val, z - val, w - val }; }
+		vec4 operator /(const float& val) { return { x / val, y / val, z / val, w / val }; }
+		vec4 operator *(const float& val) { return { x * val, y * val, z * val, w * val }; }
 
-		void operator +=(const double& val) { this->x += val; this->y += val; this->z += val; this->w += val; }
-		void operator -=(const double& val) { this->x -= val; this->y -= val; this->z += val; this->w -= val; }
+		void operator +=(const float& val) { this->x += val; this->y += val; this->z += val; this->w += val; }
+		void operator -=(const float& val) { this->x -= val; this->y -= val; this->z += val; this->w -= val; }
 
 		void operator =(const vec2& a) { this->x = a.x; this->y = a.y; }
 		void operator =(const vec3& a) { this->x = a.x; this->y = a.y; this->z = a.z; }
@@ -124,25 +110,21 @@ namespace ln
 
 		operator float* ()
 		{
-			values[0] = x;
-			values[1] = y;
-			values[2] = z;
-			values[3] = w;
-			return values;
+			return &x;
 		}
 	};
 
 
-	double dot(vec2 v1, vec2 v2);
-	double dot(vec3 v1, vec3 v2);
-	double dot(vec4 v1, vec4 v2);
+	float dot(vec2 v1, vec2 v2);
+	float dot(vec3 v1, vec3 v2);
+	float dot(vec4 v1, vec4 v2);
 
-	double cross(vec2 v1, vec2 v2);
+	float cross(vec2 v1, vec2 v2);
 	vec3 cross(vec3 v1, vec3 v2);
 
-	double magnitude(vec2 v);
-	double magnitude(vec3 v);
-	double magnitude(vec4 v);
+	float magnitude(vec2 v);
+	float magnitude(vec3 v);
+	float magnitude(vec4 v);
 
 	vec2 normalize(vec2 v);
 	vec3 normalize(vec3 v);
@@ -151,13 +133,7 @@ namespace ln
 
 	struct mat2
 	{
-	private:
-		float values[4] = { 0, 0, 0, 0 };
-	public:
 		vec2 x, y;
-
-		mat2() {}
-		mat2(vec2 x1, vec2 y1) { x = x1; y = y1; }
 
 		vec2 getX();
 		vec2 getY();
@@ -167,18 +143,18 @@ namespace ln
 			vec2 x1 = getX();
 			vec2 y1 = getY();
 			mat2 out = {};
-			out.x.x = dot(x, x1);
-			out.x.y = dot(x, y1);
-			out.y.x = dot(y, x1);
-			out.y.y = dot(y, y1);
+			out.x.x = dot(a.x, x1);
+			out.x.y = dot(a.x, y1);
+			out.y.x = dot(a.y, x1);
+			out.y.y = dot(a.y, y1);
 
 			return out;
 		}
 		vec2 operator *(const vec2& a)
 		{
 			vec2 out = {};
-			out.x = dot(x, a);
-			out.y = dot(y, a);
+			out.x = dot(getX(), a);
+			out.y = dot(getY(), a);
 
 			return out;
 		}
@@ -187,18 +163,11 @@ namespace ln
 
 		operator float* ()
 		{
-			values[0] = x.x;
-			values[1] = x.y;
-			values[2] = y.x;
-			values[3] = y.y;
-			return values;
+			return &x.x;
 		}
 	};
 	struct mat3
 	{
-	private:
-		float values[9] = { 0, 0, 0, 0 };
-	public:
 		vec3 x, y, z;
 
 		mat3() {}
@@ -216,17 +185,17 @@ namespace ln
 			vec3 z1 = getZ();
 			mat3 out = {};
 
-			out.x.x = dot(x, x1);
-			out.x.y = dot(x, y1);
-			out.x.z = dot(x, z1);
+			out.x.x = dot(a.x, x1);
+			out.x.y = dot(a.x, y1);
+			out.x.z = dot(a.x, z1);
 
-			out.x.x = dot(y, x1);
-			out.x.y = dot(y, y1);
-			out.x.z = dot(y, z1);
+			out.y.x = dot(a.y, x1);
+			out.y.y = dot(a.y, y1);
+			out.y.z = dot(a.y, z1);
 
-			out.z.x = dot(z, x1);
-			out.z.y = dot(z, y1);
-			out.z.z = dot(z, z1);
+			out.z.x = dot(a.z, x1);
+			out.z.y = dot(a.z, y1);
+			out.z.z = dot(a.z, z1);
 
 			return out;
 		}
@@ -234,9 +203,9 @@ namespace ln
 		vec3 operator *(const vec3& a)
 		{
 			vec3 out = {};
-			out.x = dot(x, a);
-			out.y = dot(y, a);
-			out.z = dot(z, a);
+			out.x = dot(getX(), a);
+			out.y = dot(getY(), a);
+			out.z = dot(getZ(), a);
 
 			return out;
 		}
@@ -246,25 +215,11 @@ namespace ln
 
 		operator float* ()
 		{
-			values[0] = x.x;
-			values[1] = x.y;
-			values[2] = x.z;
-
-			values[3] = y.x;
-			values[4] = y.y;
-			values[5] = y.z;
-
-			values[6] = z.x;
-			values[7] = z.y;
-			values[8] = z.z;
-			return values;
+			return &x.x;
 		}
 	};
 	struct mat4
 	{
-	private:
-		float values[16] = { 0, 0, 0, 0 };
-	public:
 		vec4 x, y, z, w;
 
 		mat4() {}
@@ -285,25 +240,25 @@ namespace ln
 			vec4 w1 = getW();
 			mat4 out = {};
 
-			out.x.x = dot(x, x1);
-			out.x.y = dot(x, y1);
-			out.x.z = dot(x, z1);
-			out.x.w = dot(x, w1);
+			out.x.x = dot(a.x, x1);
+			out.x.y = dot(a.x, y1);
+			out.x.z = dot(a.x, z1);
+			out.x.w = dot(a.x, w1);
 
-			out.x.x = dot(y, x1);
-			out.x.y = dot(y, y1);
-			out.x.z = dot(y, z1);
-			out.x.w = dot(y, w1);
+			out.y.x = dot(a.y, x1);
+			out.y.y = dot(a.y, y1);
+			out.y.z = dot(a.y, z1);
+			out.y.w = dot(a.y, w1);
 
-			out.z.x = dot(z, x1);
-			out.z.y = dot(z, y1);
-			out.z.z = dot(z, z1);
-			out.z.w = dot(z, w1);
+			out.z.x = dot(a.z, x1);
+			out.z.y = dot(a.z, y1);
+			out.z.z = dot(a.z, z1);
+			out.z.w = dot(a.z, w1);
 
-			out.w.x = dot(w, x1);
-			out.w.y = dot(w, y1);
-			out.w.z = dot(w, z1);
-			out.w.w = dot(w, w1);
+			out.w.x = dot(a.w, x1);
+			out.w.y = dot(a.w, y1);
+			out.w.z = dot(a.w, z1);
+			out.w.w = dot(a.w, w1);
 
 			return out;
 		}
@@ -311,10 +266,10 @@ namespace ln
 		vec4 operator *(const vec4& a)
 		{
 			vec4 out = {};
-			out.x = dot(x, a);
-			out.y = dot(y, a);
-			out.z = dot(z, a);
-			out.w = dot(w, a);
+			out.x = dot(getX(), a);
+			out.y = dot(getY(), a);
+			out.z = dot(getZ(), a);
+			out.w = dot(getW(), a);
 
 			return out;
 		}
@@ -325,26 +280,7 @@ namespace ln
 
 		operator float* ()
 		{
-			values[0] = x.x;
-			values[1] = x.y;
-			values[2] = x.z;
-			values[3] = x.w;
-
-			values[4] = y.x;
-			values[5] = y.y;
-			values[6] = y.z;
-			values[7] = y.w;
-
-			values[8] = z.x;
-			values[9] = z.y;
-			values[10] = z.z;
-			values[11] = z.w;
-
-			values[12] = w.x;
-			values[13] = w.y;
-			values[14] = w.z;
-			values[15] = w.w;
-			return values;
+			return &x.x;
 		}
 	};
 
